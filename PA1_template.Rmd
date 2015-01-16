@@ -8,18 +8,63 @@ output:
 
 ## Loading and preprocessing the data
 
+Load data using read.csv (nothing is renderend by knitr).
+activities <- read.csv("activity.csv")
+
 
 
 ## What is mean total number of steps taken per day?
+
+stepsPerDay <- aggregate(steps ~ date, activities, sum)
+1 - Visualize the histogram of the total number of steps taken each day 9717 277 103 117 183 263
+
+hist(stepsPerDay$steps)
+2 - The mean number of steps taken per day is r mean(stepsPerDay$steps) 
+and the median total number of steps taken per day is r median(stepsPerDay$steps)
 
 
 
 ## What is the average daily activity pattern?
 
+1 - A time series of the 5-minute interval
+
+meanStepsPerInterval <- aggregate(steps ~ interval, activities, mean)
+plot(meanStepsPerInterval$interval, meanStepsPerInterval$steps, type = "l")
+2 - Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps 
+r meanStepsPerInterval$interval[which.max(meanStepsPerInterval$steps)]
+
 
 
 ## Imputing missing values
 
+1 - The total number of missing values in the dataset is r sum(is.na(activities$step))
+
+2 - We will use the mean steps per interval to replace NAs
+
+3 - Create a new dataset
+
+newd <- activities
+newd$steps = replace(newd$steps, is.na(newd$steps), meanStepsPerInterval$step)
+4- Make a histogram
+
+newStepsPerDay <- aggregate(steps ~ date, newd, sum)
+hist(newStepsPerDay$steps)
+The new mean number of steps taken per day is r mean(newStepsPerDay$steps) 
+and the new median total number of steps taken per day is r median(newStepsPerDay$steps)
+
+
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+1 - Create the factor week with the two levels "weekday" and "weekend"
+
+newd$week <- ifelse(weekdays(as.Date(newd$date)) %in% c("Saturday", "Sunday"), "weekend", "weekday") 
+weekend <- newd[newd$week == "weekend",]
+weekendStepsPerDay <- aggregate(steps ~ interval, weekend, sum)
+plot(weekendStepsPerDay$interval, weekendStepsPerDay$steps, type = "l")
+weekday <- newd[newd$week == "weekday",]
+weekdayStepsPerDay <- aggregate(steps ~ interval, weekday, sum)
+plot(weekdayStepsPerDay$interval, weekdayStepsPerDay$steps, type = "l")
+
+
