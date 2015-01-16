@@ -114,7 +114,7 @@ hist(newStepsPerDay$steps)
 
 The new mean number of steps taken per day is 1.0766189\times 10^{4} and the new median total number of steps taken per day is 1.0766189\times 10^{4}
 
-Yes values differ from the first part of the assignment but not much.newd
+
 
 
 
