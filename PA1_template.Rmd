@@ -9,7 +9,11 @@ output:
 ## Loading and preprocessing the data
 
 Load data using read.csv (nothing is renderend by knitr).
+
+
+```r
 activities <- read.csv("activity.csv")
+```
 
 
 
