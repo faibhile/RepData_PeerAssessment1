@@ -23,14 +23,8 @@ activities <- read.csv("activity.csv")
 stepsPerDay <- aggregate(steps ~ date, activities, sum)
 ```
 
-1 - Histogram of the total number of steps taken each day
-9717 277 103 117 183 263
-```r
-stepsPerDay <- aggregate(steps ~ date, activities, sum)
-```
-
 1 - Visualize the histogram of the total number of steps taken each day
-
+9717 277 103 117 183 263
 
 ```r
 hist(stepsPerDay$steps)
